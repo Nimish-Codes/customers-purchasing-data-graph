@@ -30,18 +30,21 @@ def main():
 
     # Visualize the clusters
     st.write("### Customer Segmentation")
-    plt.figure(figsize=(8, 6))
-    plt.scatter(df['Income'], df['Avg_Purchase_Amount'], c=df['Segment'], cmap='viridis', s=50, alpha=0.5)
+    fig, ax = plt.subplots(figsize=(8, 6))
+    scatter = ax.scatter(df['Income'], df['Avg_Purchase_Amount'], c=df['Segment'], cmap='viridis', s=50, alpha=0.5, label=df['Segment'])
     plt.xlabel('Income')
     plt.ylabel('Avg_Purchase_Amount')
     plt.title('Customer Segmentation')
     plt.grid(True)
-    st.pyplot()
+    plt.legend(*scatter.legend_elements(), title="Segments")
+    st.pyplot(fig)
 
     # Display segment profiles
     st.write("### Segment Profiles")
     segment_profiles = df.groupby('Segment').mean()
     st.write(segment_profiles)
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if __name__ == "__main__":
     main()
